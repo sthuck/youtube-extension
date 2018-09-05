@@ -1,11 +1,4 @@
-(function () {
-  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    switch (message.type) {
-      case 'fetchLinks':
-        sendResponse(fetchLinks());
-        break;
-    }
-  });
+(() => {
 
   const fetchLinks = () => {
     const baseUrl = `http://www.youtube.com/watch_videos?video_ids=`;
@@ -19,4 +12,12 @@
     const uniqueIds = [...new Set(youtubeIds)];
     return baseUrl + uniqueIds.join(',');
   }
+
+  chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
+    switch (message.type) {
+      case 'fetchLinks':
+        sendResponse(fetchLinks());
+        break;
+    }
+  });
 })();
