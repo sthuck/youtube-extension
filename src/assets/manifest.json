@@ -1,7 +1,7 @@
 {
-    "name": "collect youtube",
-    "version": "1.0",
-    "description": "Build an Extension!",
+    "name": "YoutubeScraper",
+    "version": "0.1",
+    "description": "Scrape all youtube links from a webpage",
     "manifest_version": 2,
     "icons": {
         "64": "icon-64.png",
