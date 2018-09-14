@@ -3,5 +3,8 @@
     "tslint:recommended",
     "typestrict",
     "tslint-config-prettier"
-  ]
+  ],
+  "rules": {
+    "no-console": [true, "log"]
+  }
 }

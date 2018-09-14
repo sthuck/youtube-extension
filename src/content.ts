@@ -1,7 +1,6 @@
 (() => {
 
   const fetchLinks = () => {
-    const baseUrl = `http://www.youtube.com/watch_videos?video_ids=`;
     const links = [...document.querySelectorAll<HTMLAnchorElement>('a[href]')];
     const youtubeIds = links
       .filter(link => link.href.search(/(youtu\.be)|(youtube)/) >= 0)
@@ -10,7 +9,7 @@
       .map(match => match && (match[1] || match[2]))
       .filter(youtubeId => !!youtubeId);
     const uniqueIds = [...new Set(youtubeIds)];
-    return baseUrl + uniqueIds.join(',');
+    return uniqueIds;
   }
 
   chrome.runtime.onMessage.addListener((message, _, sendResponse) => {

@@ -1,33 +1,28 @@
 {
-    "name": "YoutubeScraper",
-    "version": "0.1",
-    "description": "Scrape all youtube links from a webpage",
-    "manifest_version": 2,
-    "icons": {
-        "64": "icon-64.png",
-        "512": "icon-512.png"
+  "name": "YoutubeScraper",
+  "version": "0.2",
+  "description": "Scrape all youtube links from a webpage",
+  "manifest_version": 2,
+  "icons": {
+    "64": "icon-64.png",
+    "512": "icon-512.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "64": "icon-64.png"
     },
-    "browser_action": {
-        "default_icon": {
-            "64": "icon-64.png"
-        },
-        "default_title": "collect youtube links",
-        "default_popup": "popup.html"
-    },
-    "content_scripts": [
-        {
-            "matches": [
-                "https://*/*",
-                "http://*/*"
-            ],
-            "js": [
-                "content.js"
-            ]
-        }
-    ],
-    "permissions": [
-        "tabs",
-        "https://*/*",
-        "http://*/*"
+    "default_title": "collect youtube links",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "activeTab",
+    "identity"
+  ],
+  "oauth2": {
+    "client_id": "153307209659-17rdaesih3nfgvblb5ccdqnmlcnskjfo.apps.googleusercontent.com",
+    "scopes": [
+      "email",
+      "https://www.googleapis.com/auth/youtube"
     ]
+  }
 }
