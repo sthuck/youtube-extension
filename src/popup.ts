@@ -1,5 +1,7 @@
+import './assets/popup.scss';
+
 const getCurrentTab = (): Promise<chrome.tabs.Tab> =>
-  new Promise(resolve => chrome.tabs.query({active: true, currentWindow: true}, ([tab]) => resolve(tab)));
+  new Promise(resolve => chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => resolve(tab)));
 
 const sendMessage = (tabId: number, msg: any): Promise<any> =>
   new Promise(resolve => chrome.tabs.sendMessage(tabId, msg, resolve));
@@ -15,7 +17,7 @@ const createPlaylist = (key: string) => {
       title: 'AutomaticPlaylist',
     },
   });
-  return fetch(new Request('https://www.googleapis.com/youtube/v3/playlists?part=snippet,status', {headers, method: 'POST', mode: 'cors', body})).
+  return fetch(new Request('https://www.googleapis.com/youtube/v3/playlists?part=snippet,status', { headers, method: 'POST', mode: 'cors', body })).
     then(reponse => reponse.json());
 }
 
@@ -33,31 +35,31 @@ const addVideoToPlaylist = (key: string, playlistId: string, videoId: string) =>
       }
     },
   });
-  return fetch(new Request('https://www.googleapis.com/youtube/v3/playlistItems?part=snippet', {headers, method: 'POST', mode: 'cors', body})).
+  return fetch(new Request('https://www.googleapis.com/youtube/v3/playlistItems?part=snippet', { headers, method: 'POST', mode: 'cors', body })).
     then(reponse => reponse.json());
 }
 
 
 const injectContentScript = (tab: chrome.tabs.Tab) =>
   new Promise((resolve, reject) => typeof tab.id !== 'undefined' ?
-    chrome.tabs.executeScript(tab.id, {file: 'content.js'}, resolve)
+    chrome.tabs.executeScript(tab.id, { file: 'content.js' }, resolve)
     : reject('Error getting Tab'));
 
 const setupMainButton = () => {
   const btn = document.querySelector('.main-button');
   if (btn) {
     btn.addEventListener('click', async () => {
-      chrome.identity.getAuthToken({interactive: true}, async (token) => {
+      chrome.identity.getAuthToken({ interactive: true }, async (token) => {
         const tab = await getCurrentTab();
         await injectContentScript(tab);
         if (tab && tab.id) {
           try {
-            const videoIds: string[] = await sendMessage(tab.id, {type: 'fetchLinks'});
-            const {id: playlistId} = await createPlaylist(token);
+            const videoIds: string[] = await sendMessage(tab.id, { type: 'fetchLinks' });
+            const { id: playlistId } = await createPlaylist(token);
             for (const videoId of videoIds) {
               await addVideoToPlaylist(token, playlistId, videoId);
             }
-            chrome.tabs.create({url: `https://www.youtube.com/playlist?list=${playlistId}`})
+            chrome.tabs.create({ url: `https://www.youtube.com/playlist?list=${playlistId}` })
           } catch (e) {
             console.error(e);
           }
