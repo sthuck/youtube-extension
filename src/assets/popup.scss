@@ -1,34 +1,101 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:100,700;);
-.container {
-    width: 250px;
-    padding: 0 12px 0 0;
+
+html * {
+  box-sizing: border-box;
 }
-.main-button {
-  background-color: #000;
-  color: #fff;
+
+body {
+  margin: 0;
+}
+
+.container {
+  --strip-size: 60px;
+  position: relative;
+  width: 400px;
+  background: linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.7) ), url("https://images.pexels.com/photos/196652/pexels-photo-196652.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+  background-size:     cover;
+  background-repeat:   no-repeat;
+  background-position: center center;    
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 4;
+  padding: 5px 0;
+}
+
+.help-container {
+  position: relative;
+  width: 100%;
+  margin-bottom:  10px;
+}
+
+.help-btn {
   display: inline-block;
+  color: #fff;
+  font-family: 'Roboto';
+  font-weight: 700;
+  box-shadow: 0px 0px 0px 1px rgba(208, 208, 208, 0.7);
+  padding: 5px 10px;
+  border-radius: 20px;
+  position: relative;
+  left: 85%;
+  cursor: pointer;
+  transition: all .3s;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 30px;
+}
+
+
+.help-btn .help-btn-text {
+/*   color: rgba(0, 0, 0, 0); */
+  opacity: 0;
+  transition: opacity .3s;
+}
+
+.help-btn:hover .help-btn-text {
+/*   color: #fff; */
+  opacity: 1;
+}
+
+.help-btn:hover {
+  box-shadow: 0px 0px 0px 2px #fff;
+/*   background-color: rgba(0, 0, 0, 0.5); */
+  background-color: rgba(234, 234, 234, 0.5);
+  width: 60px;
+  left: calc(85% - 30px);
+}
+
+.btn {
+  position: relative;
+  flex: 1 1 auto;
   font-family: 'Roboto', sans-serif;
   font-size: 24px;
-  margin: 8px;
-  min-width: 230px;
-  overflow: hidden;
-  position: relative;
   text-align: center;
-  width: 100%;
+  box-shadow: 0px 0px 0px 1px rgba(208, 208, 208, 0.7);
+  transition: box-shadow 0.3s ease-out, color 0.3s ease-out;
+  width: 90%;
+  border-radius: 20px;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  cursor: pointer;
+  padding: 30px 0;
+  overflow: hidden;
 }
 
-.main-button * {
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  -webkit-transition: all 0.45s ease;
-  transition: all 0.45s ease;
+.btn:hover {
+/*   box-shadow: 0px 0px 0px 4px #fff; */
+  color: #fff;
 }
 
-.main-button:before,
-.main-button:after {
+.btn .wrap::before {
   background-color: rgba(0, 0, 0, 0.5);
-  border-top: 50px solid rgba(0, 0, 0, 0.5);
-  border-bottom: 50px solid rgba(0, 0, 0, 0.5);
+  border-top: var(--strip-size) solid rgba(200, 200, 200, 0.4);
+  border-bottom: var(--strip-size) solid rgba(200, 200, 200, 0.4);
+  border-radius: 15px;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -39,78 +106,26 @@
   transition: all 0.3s ease;
   z-index: 1;
   opacity: 0;
-}
-
-.main-button:before {
-  -webkit-transform: scaleY(2);
   transform: scaleY(2);
 }
 
-.main-button:after {
-  -webkit-transform: scaleY(2);
-  transform: scaleY(2);
+.btn:hover .wrap::before {
+  transform: scale(1);
+  opacity: 1;
 }
 
-.main-button img {
-  vertical-align: top;
-  max-width: 100%;
-  backface-visibility: hidden;
-}
-
-.main-button figcaption {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  align-items: center;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  line-height: 1.1em;
-  opacity: 0;
-  z-index: 2;
-  -webkit-transition-delay: 0s;
-  transition-delay: 0s;
-}
-
-.main-button h3 {
+.btn h3 {
   font-size: 1em;
   font-weight: 400;
   letter-spacing: 1px;
   margin: 0;
   text-transform: uppercase;
+  vertical-align: center;
+  z-index: 2;
+  position: relative;
 }
 
-.main-button h3 span {
+.btn h3 span {
   display: block;
   font-weight: 700;
-}
-
-.main-button a {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 3;
-}
-
-.main-button:hover > img,
-.main-button.hover > img {
-  opacity: 0.7;
-}
-
-.main-button:hover:before,
-.main-button:hover:after {
-  -webkit-transform: scale(1);
-  transform: scale(1);
-  opacity: 1;
-}
-
-.main-button:hover figcaption {
-  opacity: 1;
-  -webkit-transition-delay: 0.1s;
-  transition-delay: 0.1s;
 }

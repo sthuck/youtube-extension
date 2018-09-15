@@ -1,10 +1,5 @@
 import './assets/popup.scss';
 
-const getCurrentTab = (): Promise<chrome.tabs.Tab> =>
-  new Promise(resolve => chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => resolve(tab)));
-
-const sendMessage = (tabId: number, msg: any): Promise<any> =>
-  new Promise(resolve => chrome.tabs.sendMessage(tabId, msg, resolve));
 
 const createPlaylist = (key: string) => {
   const headers = new Headers([
@@ -40,18 +35,13 @@ const addVideoToPlaylist = (key: string, playlistId: string, videoId: string) =>
 }
 
 
-const injectContentScript = (tab: chrome.tabs.Tab) =>
-  new Promise((resolve, reject) => typeof tab.id !== 'undefined' ?
-    chrome.tabs.executeScript(tab.id, { file: 'content.js' }, resolve)
-    : reject('Error getting Tab'));
-
 const setupMainButton = () => {
   const btn = document.querySelector('.main-button');
   if (btn) {
     btn.addEventListener('click', async () => {
+      const tab = await getCurrentTab();
+      await injectContentScript(tab);
       chrome.identity.getAuthToken({ interactive: true }, async (token) => {
-        const tab = await getCurrentTab();
-        await injectContentScript(tab);
         if (tab && tab.id) {
           try {
             const videoIds: string[] = await sendMessage(tab.id, { type: 'fetchLinks' });
@@ -78,7 +68,8 @@ const setupImgBackground = () => {
     imageElement.src = src;
   }
 }
+
 window.onload = () => {
-  setupMainButton();
-  setupImgBackground();
+  // setupMainButton();
+  // setupImgBackground();
 }
