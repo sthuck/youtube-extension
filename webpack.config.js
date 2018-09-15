@@ -59,6 +59,10 @@ const configuration = {
     {
       from: Asset`*.png`,
       flatten: true,
+    },
+    {
+      from: Asset`*.jpeg`,
+      flatten: true,
     }]),
   ],
   resolve: {
