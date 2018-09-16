@@ -1,5 +1,11 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:100,700;);
+
 $text-color: #fff;
+$popup-width: 420px;
+$default-margin: 14px;
+$inactive-border:  0px 0px 0px 1px rgba(208, 208, 208, 0.7);
+$active-border:  0px 0px 0px 2px #fff;
+$active-background: rgba(200, 200, 200, 0.4);
 
 html * {
   box-sizing: border-box;
@@ -11,51 +17,62 @@ body {
 
 .container {
   position: relative;
-  width: 400px;
+  width: $popup-width;
   background-size: cover;                     
   background-repeat: no-repeat;
   background-position: center center;    
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 4;
-  padding: 5px 0;
+  padding: 10px 30px;
+
+  > :not(:first-child):not(:last-child) {
+    margin-bottom: $default-margin*2;
+  }
+  
+  > :first-child,
+  > :last-child {
+    margin-bottom: $default-margin;
+  }
 }
 
 .help-container {
   position: relative;
   width: 100%;
-  margin-bottom:  10px;
+  display: flex;
+  flex-direction: row-reverse;
 
   .help-btn {
+    $font-size: 16px;
+    $padding: $font-size/4;
+
     display: inline-block;
     color: $text-color;
     font-family: 'Roboto';
     font-weight: 700;
-    box-shadow: 0px 0px 0px 1px rgba(208, 208, 208, 0.7);
-    padding: 5px 10px;
+    box-shadow: $inactive-border;
+    font-size: $font-size;
+    padding: $padding $padding*2;
     border-radius: 20px;
-    position: relative;
-    left: 88%;
     cursor: pointer;
     transition: all .3s;
     overflow: hidden;
     white-space: nowrap;
-    width: 27px;
-    line-height: 16px;
+    width: $font-size + $padding*2;
+    line-height: $font-size;
 
-  .help-btn-text {
+  &::after {
+      content: ' Help';
       opacity: 0;
       transition: opacity .3s;
     }
 
     &:hover {
-      box-shadow: 0px 0px 0px 2px #fff;
-      background-color: rgba(234, 234, 234, 0.5);
+      box-shadow: $active-border;
+      background-color: $active-background;
       width: 60px;
-      left: calc(85% - 30px);
 
-      .help-btn-text {
+      &::after {
         opacity: 1;
       }
     }
@@ -64,28 +81,30 @@ body {
 
 
 .btn {
-  position: relative;
   flex: 1 1 auto;
   font-family: 'Roboto', sans-serif;
   font-size: 24px;
   text-align: center;
-  box-shadow: 0px 0px 0px 1px rgba(208, 208, 208, 0.7);
+  box-shadow: $inactive-border;
   transition: box-shadow 0.3s ease-out, background-color 0.3s;
-  width: 90%;
+  width: 100%;
   border-radius: 20px;
-  margin: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: $text-color;
-  cursor: pointer;
   padding: 30px 0;
   overflow: hidden;
 
-  &:hover {
-    box-shadow: 0px 0px 0px 2px #fff;
-    background: rgba(200, 200, 200, 0.4);
+  &.clickable {
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0px 0px 0px 2px #fff;
+      background: $active-background;
+    }
   }
+
   .btn-text-line1 {
     font-size: 1em;
     font-weight: 400;
@@ -93,10 +112,13 @@ body {
     margin: 0;
     text-transform: uppercase;
     vertical-align: center;
-    position: relative;
     .btn-text-line2 {
       display: block;
       font-weight: 700;
     }
   }  
+  
+  .loading-text {
+    margin-left: 10px;
+  }
 }

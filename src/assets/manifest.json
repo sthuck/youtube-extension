@@ -1,6 +1,6 @@
 {
   "name": "YoutubeScraper",
-  "version": "0.2",
+  "version": "1.0",
   "description": "Scrape all youtube links from a webpage",
   "manifest_version": 2,
   "icons": {
